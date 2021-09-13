@@ -8,11 +8,15 @@ public class GameManager : MonoBehaviour
 {
     private void Update()
     {
-        //TODO IF TOUCH STOP MOVING CUBE
         if (Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
         {
             Debug.Log("Touch pressed");
-            MovingCube.CurrentCube.Stop();
+            if (MovingCube.CurrentCube != null)
+            {
+                MovingCube.CurrentCube.Stop();
+            }
+
+            FindObjectOfType<CubeSpawner>().SpawnCube();
         }
     }
 }

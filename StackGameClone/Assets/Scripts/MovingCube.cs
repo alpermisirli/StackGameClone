@@ -23,6 +23,14 @@ public class MovingCube : MonoBehaviour
         }
 
         CurrentCube = this;
+
+        GetComponent<Renderer>().material.color = GetRandomColor();
+    }
+
+    private Color GetRandomColor()
+    {
+        return new Color(UnityEngine.Random.Range(0, 1f), UnityEngine.Random.Range(0, 1f),
+            UnityEngine.Random.Range(0, 1f));
     }
 
     internal void Stop()
@@ -65,5 +73,10 @@ public class MovingCube : MonoBehaviour
         var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, fallingBlockSize);
         cube.transform.position = new Vector3(transform.position.x, transform.position.y, fallingBlockZPos);
+
+        cube.AddComponent<Rigidbody>();
+        //Making the new cube the same color as the moving cube
+        cube.GetComponent<Renderer>().material.color = GetComponent<Renderer>().material.color;
+        Destroy(cube.gameObject, 1f);
     }
 }
