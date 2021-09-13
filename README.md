@@ -1,2 +1,2 @@
 # StackGameClone
-Clone of the android game Stack.
+Clone of the android game Stack in Unity.
