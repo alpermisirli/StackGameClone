@@ -6,6 +6,8 @@ using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 public class GameManager : MonoBehaviour
 {
+    public static event Action OnCubeSpawn = delegate { };
+
     private CubeSpawner[] spawners;
     private int spawnerIndex;
     private CubeSpawner currentSpawner;
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
             currentSpawner = spawners[spawnerIndex];
 
             currentSpawner.SpawnCube();
+            OnCubeSpawn();
         }
     }
 }
