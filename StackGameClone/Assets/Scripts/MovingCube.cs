@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MovingCube : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class MovingCube : MonoBehaviour
         CurrentCube = this;
 
         GetComponent<Renderer>().material.color = GetRandomColor();
+
+        transform.localScale = new Vector3(LastCube.transform.localScale.x, transform.localScale.y,
+            LastCube.transform.localScale.z);
     }
 
     private Color GetRandomColor()
@@ -37,6 +41,15 @@ public class MovingCube : MonoBehaviour
     {
         moveSpeed = 0f;
         float hangover = transform.position.z - LastCube.transform.position.z;
+
+        if (Mathf.Abs(hangover) >= LastCube.transform.localScale.z)
+        {
+            LastCube = null;
+            CurrentCube = null;
+            Debug.Log("Game over");
+            SceneManager.LoadScene(0);
+        }
+
         float direction;
         // Debug.Log(hangover);
         if (hangover > 0)
@@ -49,6 +62,7 @@ public class MovingCube : MonoBehaviour
         }
 
         SplitCubeOnZ(hangover, direction);
+        LastCube = this;
     }
 
     private void SplitCubeOnZ(float hangover, float direction)
@@ -62,7 +76,7 @@ public class MovingCube : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, newZSize);
         transform.position = new Vector3(transform.position.x, transform.position.y, newZPosition);
 
-        float cubeEgde = transform.position.z + (newZSize / 2f) * direction;
+        float cubeEgde = transform.position.z + (newZSize / 2f * direction);
         float fallingBlockZPos = cubeEgde + fallingBlockSize / 2f * direction;
 
         SpawnDropCube(fallingBlockZPos, fallingBlockSize);
