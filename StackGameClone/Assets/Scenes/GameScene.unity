@@ -840,6 +840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75839621042448987ef3af94681f5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camSpeed: 2
 --- !u!4 &1466104765
 Transform:
   m_ObjectHideFlags: 0
